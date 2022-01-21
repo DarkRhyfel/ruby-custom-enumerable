@@ -3,6 +3,17 @@
 # Enumerable module
 module Enumerable
   # Your code goes here
+  def my_each_with_index(*args)
+    return to_enum(__method__, *args) unless block_given?
+
+    i = 0
+    for element in self
+      yield element, i
+      i += 1
+    end
+
+    self
+  end
 end
 
 # You will first have to define my_each
@@ -12,7 +23,7 @@ end
 class Array
   # Define my_each here
   def my_each
-    return to_enum(:my_each) unless block_given?
+    return to_enum(__method__) unless block_given?
 
     for element in self
       yield element
