@@ -127,6 +127,18 @@ module Enumerable
     
     count
   end
+
+  def my_map
+    return to_enum(__method__) unless block_given?
+
+    mapped = []
+
+    for element in self
+      mapped << yield(element)
+    end
+
+    mapped
+  end
 end
 
 # You will first have to define my_each
