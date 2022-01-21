@@ -80,6 +80,53 @@ module Enumerable
       result
     end
   end
+
+  def my_none?(pattern = nil)
+    if block_given?
+      for element in self
+        return false if yield(element)
+      end
+      true
+    elsif !block_given? && pattern == nil
+      for element in self
+        return false if element
+      end
+      true
+    else
+      for element in self
+        case element
+        in ^pattern
+            result = false
+        else
+          result = true
+        end
+
+        break unless result
+      end
+
+      result
+    end
+  end
+
+  def my_count(item = nil)
+    count = 0
+
+    if block_given?
+      for element in self
+        count += 1 if yield element
+      end
+    elsif item != nil
+      for element in self
+        count += 1 if element == item
+      end
+    else
+      for _ in self
+        count +=1
+      end
+    end
+    
+    count
+  end
 end
 
 # You will first have to define my_each
