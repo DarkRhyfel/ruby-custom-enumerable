@@ -14,6 +14,18 @@ module Enumerable
 
     self
   end
+
+  def my_select
+    return to_enum(__method__) unless block_given?
+
+    selected_elements = []
+
+    for element in self
+      selected_elements << element if yield(element)
+    end
+
+    selected_elements
+  end
 end
 
 # You will first have to define my_each
