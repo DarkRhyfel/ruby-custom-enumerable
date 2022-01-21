@@ -26,6 +26,60 @@ module Enumerable
 
     selected_elements
   end
+
+  def my_all?(pattern = nil)
+    if block_given?
+      for element in self
+        return false unless yield(element)
+      end
+      true
+    elsif !block_given? && pattern == nil
+      for element in self
+        return false unless element
+      end
+      true
+    else
+      for element in self
+        case element
+        in ^pattern
+            result = true
+        else
+          result = false
+        end
+
+        break unless result
+      end
+
+      result
+    end
+  end
+
+  def my_any?(pattern = nil)
+    if block_given?
+      for element in self
+        return true if yield(element)
+      end
+      false
+    elsif !block_given? && pattern == nil
+      for element in self
+        return true unless element
+      end
+      false
+    else
+      for element in self
+        case element
+        in ^pattern
+            result = true
+        else
+          result = false
+        end
+
+        break if result
+      end
+
+      result
+    end
+  end
 end
 
 # You will first have to define my_each
