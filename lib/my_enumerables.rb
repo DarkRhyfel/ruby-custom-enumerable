@@ -139,6 +139,29 @@ module Enumerable
 
     mapped
   end
+
+  def my_inject(initial = nil, operator = nil)
+    if initial == nil
+      accumulator = self[0]
+      start = 1
+    else
+      accumulator = initial
+      start = 0
+    end
+    
+    if block_given?
+      for element in self[start..]
+        accumulator = yield(accumulator, element)
+      end
+    else
+      for element in self[start..]
+        accumulator = operator.to_proc.call(accumulator, element)
+      end
+    end
+
+    accumulator
+  end
+
 end
 
 # You will first have to define my_each
